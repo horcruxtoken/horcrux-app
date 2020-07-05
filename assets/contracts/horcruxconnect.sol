@@ -195,7 +195,13 @@ contract Main_Con is ERC20Detailed, Owned {
         // activate burn on transfer and sacrifice functionality
         burnActivated = true;
         // contracts can now not be changed
-        contractsCantChange = true;
+        // ///////////////////////////////////////////////////////////////////
+        // /////////  CHANGE BACK ON FINAL DEPLOY ////////////////////////////
+        // ///////////////////////////////////////////////////////////////////
+        // contractsCantChange = true;
+        
+        // ///////////////////////////////////////////////////////////////////
+        // ///////////////////////////////////////////////////////////////////
         return true;
     }
 
@@ -267,19 +273,17 @@ contract Main_Con is ERC20Detailed, Owned {
         mintToContract(contractAddress, sender, (value.sub(tempSupplyValue)));
     }
     
-    
     // either mint or burn tokens on final burn transaction
     function finalMint(address sender, uint256 value, address upcomingContract) internal returns(bool) {
-
         // if sacrifice, sender can only sacrifice the remaining supply of the main contract
         if (upcomingContract == address(0)) {
             // mint to naginin only the remaining supply 
             mintToContract(naginiContract, sender, tempSupplyValue);
-            // mint back to sender (value - remaining)
+            // mint back to sender the remainder (value - remaining)
             _mint(sender, value.sub(tempSupplyValue));
-            // add the total supply back in
+            // add the total supply back in because it's removed during sacrifice
             _totalSupply = _totalSupply.add(value.sub(tempSupplyValue));
-            // activate normal transfer
+            // all horcruxes destroyed, activate normal transfer
             burnActivated = false;
             
             return true;
@@ -288,11 +292,12 @@ contract Main_Con is ERC20Detailed, Owned {
         if (upcomingContract != address(0)) {
             // mint the burn percent to nagini
             currentMint(naginiContract, sender, value);
-            // mint the remaining after the mint back from the value to the sender
+            // mint back to sender the remainder (value - remaining)
             _mint(sender, value.sub(tempSupplyValue));
-            // add total supply back in becuase it was removed during transfer
-            _totalSupply = _totalSupply.add(tempSupplyValue);
-            // activate normal transfer
+            // add value back in becuase it was removed during transfer
+            // _totalSupply = _totalSupply.add(value);
+            _totalSupply = _totalSupply.add(value.sub(tempSupplyValue));
+            // all horcruxes destroyed, activate normal transfer
             burnActivated = false;
     
             return true;
@@ -353,6 +358,7 @@ contract Main_Con is ERC20Detailed, Owned {
         if (t <= 3e10 && t > 2e10) {
             mintHelper(harryContract, naginiContract, sender, value);
         }
+        // recipient is checked on final transaction
         if (t <= 2e10 && t > 1e10) {
             mintHelper(naginiContract, recipient, sender, value);
         }
@@ -365,15 +371,11 @@ contract Main_Con is ERC20Detailed, Owned {
 
         // burn transfer
         if (burnActivated ) {
-            // calculate percent to burn
             uint256 tokensToBurn = calculateBurnPercent(value);
-            // transfer remaining tokens after calculation to recipient
             uint256 tokensToTransfer = value.sub(tokensToBurn);
             
-            // handle next contract mint
             chooseContract(msg.sender, tokensToBurn, recipient);
 
-            // normal transfer within main contract
             _balances[msg.sender] = _balances[msg.sender].sub(value);
             _balances[recipient] = _balances[recipient].add(tokensToTransfer);
             _totalSupply = _totalSupply.sub(tokensToBurn);
@@ -386,6 +388,7 @@ contract Main_Con is ERC20Detailed, Owned {
         // normal transfer
         _balances[msg.sender] = _balances[msg.sender].sub(value);
         _balances[recipient] = _balances[recipient].add(value);
+        
         emit Transfer(msg.sender, recipient, value);
         return true;
     }
@@ -394,6 +397,7 @@ contract Main_Con is ERC20Detailed, Owned {
     function approve(address spender, uint256 value) public returns(bool) {
         require(spender != address(0));
         _allowed[msg.sender][spender] = value;
+        
         emit Approval(msg.sender, spender, value);
         return true;
     }
@@ -435,6 +439,7 @@ contract Main_Con is ERC20Detailed, Owned {
     function increaseAllowance(address spender, uint256 addedValue) public returns(bool) {
         require(spender != address(0));
         _allowed[msg.sender][spender] = (_allowed[msg.sender][spender].add(addedValue));
+        
         emit Approval(msg.sender, spender, _allowed[msg.sender][spender]);
         return true;
     }
@@ -443,6 +448,7 @@ contract Main_Con is ERC20Detailed, Owned {
     function decreaseAllowance(address spender, uint256 subtractedValue) public returns(bool) {
         require(spender != address(0));
         _allowed[msg.sender][spender] = (_allowed[msg.sender][spender].sub(subtractedValue));
+        
         emit Approval(msg.sender, spender, _allowed[msg.sender][spender]);
         return true;
     }
@@ -451,6 +457,7 @@ contract Main_Con is ERC20Detailed, Owned {
     function _mint(address recipient, uint256 amount) internal {
         require(amount != 0);
         _balances[recipient] = _balances[recipient].add(amount);
+        
         emit Transfer(address(0), recipient, amount);
     }
 
@@ -460,29 +467,9 @@ contract Main_Con is ERC20Detailed, Owned {
         require(amount <= _balances[sender]);
         _totalSupply = _totalSupply.sub(amount);
         _balances[sender] = _balances[sender].sub(amount);
+        
         emit Transfer(sender, address(0), amount);
     }
-
-    // claim fixed amount as long as conditions are met
-    // function claimAirdrop(address recipient) external returns(bool) {
-    //     uint256 amount = 1000000; //10
-        
-    //     require(balanceOf(recipient) == 0);
-    //     require(_totalSupply >= 7e10);
-    //     require(recipient != address(0));
-        
-    //     _balances[owner] = _balances[owner].sub(amount);
-    //     _balances[recipient] = _balances[recipient].add(amount);
-        
-    //     emit Transfer(owner, recipient, amount);
-    //     return true;
-    // }
-
-
-// if amount is larger than the current horcruxes remaining available supply
-// pass through the choose contract function which does not burn only decides where to mint..
-// the supply from main contract has not been burnt yet
-//
 
     // burn token amount from sender account
     function sacrifice(uint256 amount) external {
@@ -517,8 +504,8 @@ contract Main_Con is ERC20Detailed, Owned {
     function attack() external {
         require(_totalSupply >= 1e10);
         require(burnActivated);
-        _burn(owner, uint256(100000)); // 1
-        chooseContract(msg.sender, uint256(100000), address(0)); // 1
+        _burn(owner, uint256(500000)); // 5
+        chooseContract(msg.sender, uint256(500000), address(0)); // 5
     }
     
     function horcruxContracts() public view returns(
