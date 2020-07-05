@@ -20,10 +20,10 @@ else {
 }
 console.log (window.web3.currentProvider)
 
-const main_ContractAddress = '0xBF67bFF4C550b2a663F723a1bEFFbF8e8Dfac7AE';
+const main_ContractAddress = '0x9AFea5c12a206D0e5708B9737E422A6e9BEAfAeA';
 
-const diary_ContractAddress = '0xcf36b9b16a273f5c3adeac71b8436108d2beb4ab';
-const ring_ContractAddress = '0xcf36b9b16a273f5c3adeac71b8436108d2beb4ab';
+const diary_ContractAddress = '0x15C99DEAA62E09b0837ec4Edb21aBD05C58a83a0';
+const ring_ContractAddress = '0xA652A275D0000E0bF6F0c8B5DA1badd3a4801598';
 const cup_ContractAddress = '0xcf36b9b16a273f5c3adeac71b8436108d2beb4ab';
 const locket_ContractAddress = '0xcf36b9b16a273f5c3adeac71b8436108d2beb4ab';
 const diadem_ContractAddress = '0xcf36b9b16a273f5c3adeac71b8436108d2beb4ab';
@@ -48,8 +48,8 @@ nagini_Contract = new web3.eth.Contract(token_ContractABI, nagini_ContractAddres
 // Accounts
 let selectedAddress = ethereum.selectedAddress 
 let account;
-const etherscan_tx = "<a target='_blank' href='https://ropsten.etherscan.io/tx/"
-const etherscan_token = "<a target='_blank' href='https://ropsten.etherscan.io/token/"
+const etherscan_tx = "<a target='_blank' href='https://kovan.etherscan.io/tx/"
+const etherscan_token = "<a target='_blank' href='https://kovan.etherscan.io/token/"
 const success = "'>Success! Click to view Transaction</a>"
 const process = "Processing transaction..."
 const reverted = "Transaction reverted :(" 
@@ -80,8 +80,11 @@ function getAccount() {
 // ///////////////////////////////////////////////////////////////////////
 //                  GET USERS WALLET ADDRESS
 // ///////////////////////////////////////////////////////////////////////
-function updateWallet() {}
+function updateWallet() {
+  document.getElementById('my_wallet').innerHTML = selectedAddress
+}
 document.getElementById('my_wallet').innerHTML = selectedAddress
+
 // document.getElementById('balance_of').innerHTML = web3.eth.getBalance(ethereum.selectedAddress)
 // console.log(web3.eth.getBalance(ethereum.selectedAddress))
 
@@ -115,17 +118,15 @@ function displayTokenInfo(name, supply, contract, symbol, burnRate) {
           'Total Possible Supply: 100,000' +
         '</div>' +
         '<div class="mt-3">' +
-        'Total Supply Minted: <span id="total_supply">' + numberWithCommas(supply) + '</span>' +
+        'Total Supply Minted: <span id="total_supply">' + numberWithCommas(supply/1e5) + '</span>' +
         '</div>' +
         '<div class="mt-3">' +
-          'Mint Percent: ' + burnRate + '%'+
-        '</div>' +
-        '<div class="mt-3">' +
-    'Percent Destroyed: <span id="burned_tokens">' + numberWithCommas(supply / 1e10) + '%</span>' +
+    'Percent Destroyed: <span id="burned_tokens">' + numberWithCommas(supply / 1e8) + '%</span>' +
+    // 'Percent Destroyed: <span id="burned_tokens">' + supply + '%</span>' +
         '</div>' +
         '<div class="mt-3">' +
           'Contract Address: <br>' +
-          '<h6> <a target="blank" href="https://ropsten.etherscan.io/token/' + contract + '">' + contract + '</a></h6>' +
+          '<h6> <a target="_blank" href="https://kovan.etherscan.io/token/' + contract + '">' + contract + '</a></h6>' +
         '</div>' +
       '</h3>' +
     '</div>'
@@ -172,6 +173,33 @@ function tokenContractSelect() {
     }
     if (info <= 2e10 && info > 1e10) {
       getContractValues(nagini_Contract, nagini_ContractAddress, 2)
+    }
+  })
+}
+
+function getCurrentBurnRate() {
+  mainContract.methods.totalSupply().call().then(function (info) {
+    const abi = token_ContractABI;
+    if (info > 7e10) {
+      document.getElementById('burn_rate').innerHTML = "20"
+    }
+    if (info <= 7e10 && info > 6e10) {
+      document.getElementById('burn_rate').innerHTML = "12"
+    }
+    if (info <= 6e10 && info > 5e10) {
+      document.getElementById('burn_rate').innerHTML = "10"
+    }
+    if (info <= 5e10 && info > 4e10) {
+      document.getElementById('burn_rate').innerHTML = "8"
+    }
+    if (info <= 4e10 && info > 3e10) {
+      document.getElementById('burn_rate').innerHTML = "6"
+    }
+    if (info <= 3e10 && info > 2e10) {
+      document.getElementById('burn_rate').innerHTML = "4"
+    }
+    if (info <= 2e10 && info > 1e10) {
+      document.getElementById('burn_rate').innerHTML = "2"
     }
   })
 }
@@ -327,7 +355,7 @@ function attack() {
 //                  SACRIFICE TOKEN FUNCTION
 // ///////////////////////////////////////////////////////////////////////
 function sacrifice() {
-  info = $("#tokens_to_burn").val();
+  info = $("#tokens_to_burn").val() * 1e5;
   mainContract.methods.sacrifice(info).send({ from: account })
     .on('transactionHash', tx => {
       console.log("Transaction: ", tx);
@@ -359,34 +387,36 @@ function sacrifice() {
 }
 function transfer() {
   address = $("#address_to").val();
-  value = $("#transaction_value").val();
+  value = $("#transaction_value").val() * 1e5;
 
   mainContract.methods.transfer(address, value).send({ from: account })
     .on('transactionHash', tx => {
       console.log("Transaction: ", tx);
-      // document.getElementById('sacrifice_transaction').innerHTML = process;
+      document.getElementById('send_transaction').innerHTML = process;
     })
     .then(receipt => {
       console.log('Mined', receipt)
       if (receipt.status == '0x1' || receipt.status == 1) {
         console.log("Transaction Successful")
-        // document.getElementById('sacrifice_transaction').innerHTML = etherscan_tx + receipt.transactionHash + success
+        document.getElementById('send_transaction').innerHTML = etherscan_tx + receipt.transactionHash + success
       }
       else {
         console.log('Transaction Failed')
-        // document.getElementById('sacrifice_transaction').innerHTML = reverted
+        document.getElementById('send_transaction').innerHTML = reverted
       }
     })
     .catch(err => {
       console.log('Error', err)
-      // document.getElementById('sacrifice_transaction').innerHTML = "Transaction Canceled"
+      document.getElementById('send_transaction').innerHTML = "Transaction Canceled"
       setTimeout(function () {
-        // document.getElementById('sacrifice_transaction').innerHTML = "&nbsp;"
+        document.getElementById('send_transaction').innerHTML = "&nbsp;"
       }, 3000);
     })
     .finally(() => {
-      // totalSupply()
-      // burnedTokens()
+      totalSupply()
+      burnedTokens()
+      tokenContractSelect()
+      getAccount()
     })
   // $("#airdrop").val('');
 }
@@ -422,6 +452,7 @@ function refresh() {
 }
 refresh()
 getAccount()
+getCurrentBurnRate()
 // balanceOf()
 
 
