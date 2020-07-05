@@ -1,0 +1,74 @@
+
+@font-face {
+  font-family: 'Potter2';
+  src: url('./../fonts/HARRYP__.TTF');
+}
+
+* {
+    background-color: #000000;
+    color: #C1C2C2;
+}
+html,
+body {
+    height: 100%;
+}
+.custom_font {
+    font-family: "Potter2";
+    font-size: 3rem;
+    letter-spacing: 0.1rem;
+}
+#main-div {  
+    height:100vh;
+    
+}
+#active_account {
+    font-size: 1rem;
+}
+
+input[type="number"] {
+    display: block;
+    margin : 0 auto;
+}
+#main_carousel {
+    width:100%; 
+    height: 500px !important;
+}
+
+@media only screen and (max-width: 676px) {
+    .carousel .carousel-control-prev-icon { visibility: hidden; }
+    .carousel:hover .carousel-control-prev-icon { visibility: visible; }
+
+    .carousel .carousel-control-next-icon { visibility: hidden; }
+    .carousel:hover .carousel-control-next-icon { visibility: visible; }
+}
+@media only screen and (max-width: 676px) {
+    #header {
+        font-size: 2.5rem !important; 
+    }
+}
+
+@media only screen and (max-width: 676px) {
+    .carousel-indicators {
+        top: 100%;
+    }
+}
+@media only screen and (max-width: 500px) and (min-width: 377px) {
+    .carousel-indicators {
+        top: 100%;
+    }
+}
+@media only screen and (max-width: 500px) and (min-height: 732px) {
+    .carousel-indicators {
+        top: 120%;
+    }
+}
+@media only screen and (max-width: 376px) {
+    .carousel-indicators {
+        top: 120%;
+    }
+}
+
+#active_account {
+  position: fixed; top: 0; right: 0; z-index:999; float: right;
+}
+

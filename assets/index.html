@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horcrux Token</title>
+    <link rel="stylesheet" type="text/css" href="./css/reset.css">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+</head>
+
+<body class="custom_font">
+    <div class="container-fluid" id="main-div">
+        <header>
+            <h1 id="header"class="text-center pt-2" style="font-size: 4rem; letter-spacing: 1rem;">The Horcrux Token</h1>
+        </header>
+        <div class="row mt-5 justify-content-md-center">
+            <div class="col-md-10 col-sm-12 text-center">
+                <div id="main_carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                    <ol class="carousel-indicators">
+                        <li data-target="#main_carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#main_carousel" data-slide-to="1"></li>
+                        <li data-target="#main_carousel" data-slide-to="2"></li>
+                        <li data-target="#main_carousel" data-slide-to="3"></li>
+                        <li data-target="#main_carousel" data-slide-to="4"></li>
+                        <li data-target="#main_carousel" data-slide-to="5"></li>
+                    </ol>
+                    <div class="carousel-inner">
+
+                        <!-- logo -->
+
+                        <div class="carousel-item active">
+                            <img src="./images/logo-square.png" class="mt-2" alt="..." style="width:18rem;">
+                        </div>
+
+                        <!-- about -->
+
+                        <div class="carousel-item" >
+                            <div class="row justify-content-md-center text-center">
+                                <div class="col-md-10 col-sm-12">
+                                    <h3>
+                                        He Who Must Not Be Named has transfigured his Horcruxes into tokens on the Ethereum blockchain!<br>
+                                        &hellip;
+                                    </h3>
+                                    <h3>
+                                        Help destroy a Horcrux by performing transactions and interacting with the smart contract!<br>
+                                        &hellip;
+                                    </h3>
+                                    <h3>
+                                        There are 7 Horcrux tokens. Each Horcrux has a unique token contract, each gets increasingly harder to destroy!<br>
+                                        &hellip;
+                                    </h3>
+                                    <h3>
+                                        When a token is transacted, a percentage is burnt and a equivalent Horcrux token is minted to your wallet!
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- token info -->
+
+                        <div class="carousel-item">
+                            <h1 class="mt-2 mb-3">Main Contract Info</h1>
+                            <div style="font-size: 2rem;">
+                                <h3>
+                                    <div class="">
+                                        Token Name: <span id="get_name"></span>
+                                    </div>
+                                    <div class="mt-3">
+                                        Total Supply: <span id="total_supply"></span>
+                                    </div>
+                                    <div class="mt-3">
+                                        Burned Tokens: <span id="burned_tokens"></span>
+                                    </div>
+                                    <div class="mt-3">
+                                        Decimal Places: <span id="decimals"></span>
+                                    </div>
+                                    <div class="mt-3">
+                                        Current Burn Rate: <span id="burn_rate"></span>
+                                    </div>
+                                    <div class="mt-3">
+                                        Contract Address: <br>
+                                        <h6> <a target="blank" href="https://ropsten.etherscan.io/token/0xd11fecbad9d8ee7973b072f7dd3e91e30c9b8a6f"> 0xD11feCBad9d8ee7973b072F7dD3e91e30c9b8A6f </a></h6>
+                                    </div>
+                                </h3>
+                            </div>
+                        </div>
+
+                        <!-- active horcrux information -->
+                        <div class="carousel-item">
+                            <h1 class="mt-2 mb-3">Current Active Horcrux</h1>
+                            <p id="horcrux_name" class="text-center" style="letter-spacing: .05rem;"></p>
+                        </div>
+                        
+                    
+
+                        <!-- interactions burns -->
+
+                        <div class="carousel-item">
+                            <h1 class="text-center">Attack a Horcrux</h1>
+                            <div class="row justify-content-md-center text-center">
+                                <div class="col-md-10 col-sm-12">
+                                    <h4>Performing an attack burns 5 tokens and mints 5 tokens to your wallet depending on which horcrux is active</h4>
+                                    <a href="#" onclick="attack()" class="btn btn-primary" id="attack">Attack</a>
+                                    <p style="font-size: 1rem;" id="attack_transaction"> &nbsp;</p>
+
+                                    <h4>A sacrifice burns tokens from your balance and mints tokens to your wallet depending on which horcrux is active </h4>
+                                    <form class="form-inline mb-2" role="form">
+                                        <input class="form-control text-center" type="number" id="tokens_to_burn" placeholder="1000" value="1000">
+                                    </form>
+                                    <a href="#" onclick="sacrifice()" class="btn btn-primary" id="defend">Sacrifice</a>
+                                    <p  style="font-size: rem;" id="sacrifice_transaction">&nbsp; </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- wallet balance and transactions  -->
+                        <div class="carousel-item">
+                            <h1 class="text-center">My Wallet</h1>
+                            <div class="row justify-content-md-center text-center">
+                                <div class="col-md-10 col-sm-12">
+                                    <div style="font-size: 2rem;">
+                                        <h3>
+                                            <div class="">
+                                                <h6 id="my_wallet"></h6>
+                                            </div>
+                                            <div class="mt-3">
+                                                ETH Balance: <span id="balance_of"></span>
+                                            </div>
+                                            <div class="mt-3 mb-5">
+                                                Main Tokens Balance: <span id="tokens_balance"></span>
+                                            </div>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-md-center text-center">
+                                <div class="col-md-6 col-sm-12">
+
+                                    <form>
+                                        <div class="form-group text-center">
+                                            <!-- <label for="exampleInputEmail1">Reciever Address</label> -->
+                                            <input type="text" class="form-control text-center" id="address_to" aria-describedby=""
+                                                placeholder="receiver address">
+                                            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                                        </div>
+                                        <div class="form-group">
+                                            <!-- <label for="exampleInputPassword1">Amount to send</label> -->
+                                            <input type="number" class="form-control text-center" id="transaction_value" placeholder="amount to send">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                                <!-- <a href="#" onclick="sendTxWithMetamask()" class="btn btn-primary" id="poo">send eth</a> -->
+                                <a href="#" onclick="transfer()" class="btn btn-primary" id="poo">send tokens</a>
+                                <p  style="font-size: rem;" id="sacrifice_transaction">&nbsp; </p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <a class="carousel-control-prev carousel" href="#main_carousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next carousel" href="#main_carousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+<script src="./node_modules/web3/dist/web3.min.js"></script>
+<script src="./index.js"></script>
+
+</html>
