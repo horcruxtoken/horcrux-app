@@ -96,6 +96,7 @@ window.ethereum.on('accountsChanged', function(user) {
   account = user
   document.getElementById('my_wallet').innerHTML = window.web3.currentProvider.selectedAddress
   selectedAddress = ethereum.selectedAddress 
+  getAccount()
   balanceOf()
   getTokenBalance()
 })
@@ -250,6 +251,15 @@ function getName() {
   mainContract.methods.name().call().then( function( info ) { 
     // console.log("Name: ", info);
     document.getElementById('get_name').innerHTML = info;
+  });    
+}
+// ///////////////////////////////////////////////////////////////////////
+//                  GET SYMBOL MAIN CONTRACT
+// ///////////////////////////////////////////////////////////////////////
+function getSymbol() {
+  mainContract.methods.symbol().call().then( function( info ) { 
+    // console.log("Name: ", info);
+    document.getElementById('get_symbol').innerHTML = info;
   });    
 }
 
@@ -453,6 +463,7 @@ function refresh() {
 refresh()
 getAccount()
 getCurrentBurnRate()
+getSymbol()
 // balanceOf()
 
 
