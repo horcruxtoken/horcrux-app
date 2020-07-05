@@ -16,7 +16,7 @@ else if (window.web3) {
   // no need to ask for permission
 }
 else {
-  window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+  window.alert('In order to view this website properly, you must have an ethereum enabled browser! Try MetaMask!')
 }
 console.log (window.web3.currentProvider)
 
@@ -119,7 +119,7 @@ function displayTokenInfo(name, supply, contract, symbol, burnRate) {
           'Total Possible Supply: 100,000' +
         '</div>' +
         '<div class="mt-3">' +
-        'Total Supply Minted: <span id="total_supply">' + numberWithCommas(supply/1e5) + '</span>' +
+        'Total Supply Minted: <span id="total_supply">' + numberWithCommas(supply / 1e5) + '</span>' +
         '</div>' +
         '<div class="mt-3">' +
     'Percent Destroyed: <span id="burned_tokens">' + numberWithCommas(supply / 1e8) + '%</span>' +
@@ -216,35 +216,6 @@ function numberWithCommas(x) {
 }
 
 // ///////////////////////////////////////////////////////////////////////
-//                  CLAIM AIRDROP FUNCTION
-// ///////////////////////////////////////////////////////////////////////
-function claimAirdrop() {
-  mainContract.methods.claimAirdrop(account).send({ from: account })
-    .on('transactionHash', tx => {
-      console.log("Transaction: ", tx);
-      document.getElementById('airdrop_tx').innerHTML = process;
-    })
-    .then(receipt => {
-      console.log('Mined', receipt)
-      if (receipt.status == '0x1' || receipt.status == 1) {
-        console.log("Transaction Successful")
-        document.getElementById('airdrop_tx').innerHTML = etherscan_tx + receipt.transactionHash + success
-      }
-      else {
-        console.log('Transaction Failed')
-        document.getElementById('airdrop_tx').innerHTML = reverted
-      }
-    })
-    .catch(err => {
-      console.log('Error Message', err)
-    })
-    .finally(() => {
-      freeClaimsCount()
-    })
-  // $("#airdrop").val('');
-}
-
-// ///////////////////////////////////////////////////////////////////////
 //                  GET TOKEN NAME MAIN CONTRACT
 // ///////////////////////////////////////////////////////////////////////
 function getName() {
@@ -286,17 +257,16 @@ function decimals() {
 }
 
 // ///////////////////////////////////////////////////////////////////////
-//                  GET BALANCE OF CURRENT USER                             !!!NOT WORKING!!!
+//                  GET BALANCE OF CURRENT USER                           
 // ///////////////////////////////////////////////////////////////////////
 function balanceOf() {
 
   web3.eth.getBalance(selectedAddress, function (error, result) {
-
     if (error) {
       console.log(error)
     }
     else {
-      console.log(result)
+      // console.log(result)
       document.getElementById('balance_of').innerHTML = web3.utils.fromWei(result, 'ether')
     }
   })
@@ -313,12 +283,11 @@ function burnedTokens() {
 // ///////////////////////////////////////////////////////////////////////
 //                  GET MAIN TOKEN BALANCE FROM USER
 // ///////////////////////////////////////////////////////////////////////
-// let contract = web3.eth.contract(ABI, tokenAddress);
 function getTokenBalance() {
   mainContract.methods.balanceOf(selectedAddress).call((error, balance) => {
     mainContract.methods.decimals().call((error, decimals) => {
       // balance = balance.div(10 ** decimals);
-      console.log(balance);
+      // console.log(balance);
       const formatted = balance / supply
       // console.log("Total Supply: ", numberWithCommas(formatted));
       document.getElementById('tokens_balance').innerHTML = numberWithCommas(formatted);
@@ -354,11 +323,9 @@ function attack() {
       }, 3000);
     })
     .finally(() => {
-      // attackCount()
       burnedTokens()
       totalSupply()
     })
-  // $("#airdrop").val('');
 }
 
 // ///////////////////////////////////////////////////////////////////////
@@ -393,7 +360,6 @@ function sacrifice() {
       totalSupply()
       burnedTokens()
     })
-  // $("#airdrop").val('');
 }
 function transfer() {
   address = $("#address_to").val();
@@ -428,20 +394,19 @@ function transfer() {
       tokenContractSelect()
       getAccount()
     })
-  // $("#airdrop").val('');
 }
 
-async function sendTxWithMetamask() {
-  const addressTo = $("#address_to").val();
-  const value = $("#transaction_value").val();
+// async function sendTxWithMetamask() {
+//   const addressTo = $("#address_to").val();
+//   const value = $("#transaction_value").val();
 
-  let selectedAddress = ethereum.selectedAddress
-  let balance = await web3.eth.getBalance(selectedAddress)
-  console.log('Balance', balance)
-  await web3.eth.sendTransaction({
-    to: addressTo, value: web3.utils.toWei(value, 'ether'), from: selectedAddress
-  })
-};
+//   let selectedAddress = ethereum.selectedAddress
+//   let balance = await web3.eth.getBalance(selectedAddress)
+//   console.log('Balance', balance)
+//   await web3.eth.sendTransaction({
+//     to: addressTo, value: web3.utils.toWei(value, 'ether'), from: selectedAddress
+//   })
+// };
 
 
 
@@ -449,11 +414,7 @@ async function sendTxWithMetamask() {
 //                  REFRESH STATE FUNCTION
 // ///////////////////////////////////////////////////////////////////////
 function refresh() {
-  // getAccount()
-  getName()
   totalSupply()
-  tokenContractSelect()
-  decimals()
   burnedTokens()
   setTimeout(function () {
     console.log('update from contract')
@@ -464,7 +425,9 @@ refresh()
 getAccount()
 getCurrentBurnRate()
 getSymbol()
-// balanceOf()
+decimals()
+tokenContractSelect()
+getName()
 
 
 
