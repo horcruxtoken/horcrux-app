@@ -110,16 +110,16 @@ function displayTokenInfo(name, supply, contract, symbol, burnRate) {
     '<div style="font-size: 2rem;">' +
       '<h3>' +
         '<div class="">' +
-          'Horcrux Name: <span id="get_name">' + name + '</span>' + 
+          'Name: <span id="get_name">' + name + '</span>' + 
         '</div>' + 
         '<div class="mt-3">' +
-          'Token Symbol: <span id="get_name">' + symbol + '</span>' + 
+          'Symbol: <span id="get_name">' + symbol + '</span>' + 
         '</div>' + 
         '<div class="mt-3">' +
           'Total Possible Supply: 100,000' +
         '</div>' +
         '<div class="mt-3">' +
-        'Total Supply Minted: <span id="total_supply">' + numberWithCommas(supply / 1e5) + '</span>' +
+        'Tokens Minted: <span id="total_supply">' + numberWithCommas(supply / 1e5) + '</span>' +
         '</div>' +
         '<div class="mt-3">' +
     'Percent Destroyed: <span id="burned_tokens">' + numberWithCommas(supply / 1e8) + '%</span>' +
@@ -425,7 +425,7 @@ refresh()
 getAccount()
 getCurrentBurnRate()
 getSymbol()
-decimals()
+// decimals()
 tokenContractSelect()
 getName()
 
