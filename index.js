@@ -107,7 +107,7 @@ window.ethereum.on('accountsChanged', function(user) {
 
 function displayTokenInfo(name, supply, contract, symbol, burnRate) {
   return $("#horcrux_name").html(
-    '<div style="font-size: 2rem;">' +
+    '<div style="font-size: 2rem;" class="custom_font">' +
       '<h3>' +
         '<div class="">' +
           'Name: <span id="get_name">' + name + '</span>' + 
