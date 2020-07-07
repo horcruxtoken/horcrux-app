@@ -17,6 +17,14 @@ body {
     font-size: 3rem;
     letter-spacing: 0.1rem;
 }
+
+hr {
+    background-color: white;
+}
+
+.col {
+    display:inline
+}
 #main-div {  
     height:100vh;
     
@@ -77,3 +85,11 @@ input[type="number"] {
   position: fixed; top: 0; right: 0; z-index:999; float: right;
 }
 
+.hiddenHR {
+    display: none;
+}
+@media(max-width:767px) {
+  .hiddenHR {
+    display:inline;
+  }
+}
