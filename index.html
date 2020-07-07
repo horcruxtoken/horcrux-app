@@ -71,7 +71,7 @@
                     </div>
                     <div class="mt-3">
                         Contract Address: <br>
-                        <h6> <a target="blank" href="https://kovan.etherscan.io/token/0x9AFea5c12a206D0e5708B9737E422A6e9BEAfAeA"> 0x9AFea5c12a206D0e5708B9737E422A6e9BEAfAeA </a></h6>
+                        <h6> <a target="blank" href="https://kovan.etherscan.io/token/0xc629ee12d8Cbac8A43D15685E346A9fbDA06F5a1">0xc629ee12d8Cbac8A43D15685E346A9fbDA06F5a1</a></h6>
                     </div>
                 </h3>
             </div>
@@ -92,7 +92,7 @@
                 <!-- ATTACK FUNCTION -->
                 <h1 class="mt-2 mb-3">Attack</h1>
                 <h4>Performing an attack burns 5 tokens and mints 5 tokens to your wallet depending on which horcrux is active</h4>
-                <a href="#" onclick="attack()" class="btn btn-primary" id="attack">Attack</a>
+                <button onclick="attack()" class="btn btn-primary custom_font" id="attack">Attack</button>
                 <p style="font-size: 1rem;" id="attack_transaction"> &nbsp;</p>
             </div>
 
@@ -103,9 +103,9 @@
                 <h1 class="mt-2 mb-3">Sacrifice</h1>
                 <h4>A sacrifice burns tokens from your balance and mints tokens to your wallet depending on which horcrux is active </h4>
                 <form class="form-inline mb-2" role="form">
-                    <input class="form-control text-center" type="number" id="tokens_to_burn" placeholder="1000" value="1000">
+                    <input class="form-control text-center" type="number" id="tokens_to_burn" placeholder="1000" value="1000" required>
                 </form>
-                <a href="#" onclick="sacrifice()" class="btn btn-primary" id="defend">Sacrifice</a>
+                <button onclick="sacrifice()" class="btn btn-primary custom_font" id="tokens_to_burn">Sacrifice</button>
                 <p  style="font-size: 1rem;" id="sacrifice_transaction">&nbsp; </p>
             </div>  
         </div>
@@ -129,18 +129,20 @@
                         </div>
                     </h3>
                 </div>
-                
+                <h6>Performing a transfer currently burns <span id="burn_rate_2"></span>% of your transaction </h6>
+                <!-- <h6>and mints that amount to your wallet new horcrux tokens depending on which one is active </h6> -->
                 <form>
                     <div class="form-group text-center">
                         <input type="text" class="form-control text-center" id="address_to" aria-describedby=""
-                            placeholder="RECEIVING ADDRESS">
+                            placeholder="RECEIVING ADDRESS" required>
                     </div>
                     <div class="form-group">
                         <input type="number" class="form-control text-center" id="transaction_value" 
-                            placeholder="TOKENS TO SEND">
+                            placeholder="TOKENS TO SEND" required>
                     </div>
+                    <button onclick="transfer()" class="btn btn-primary custom_font">Send Tokens</button>
                 </form>
-                <a href="#" onclick="transfer()" class="btn btn-primary" id="poo">Send tokens</a>
+                <!-- <a href="#" onclick="transfer()" class="btn btn-primary">Send tokens</a> -->
                 <p style="font-size: 1rem;" id="send_transaction"> &nbsp;</p>
             </div>           
 
@@ -154,15 +156,16 @@
                     <i class="fab fa-telegram-plane"></i>
                     <a href="https://github.com/horcruxtoken" target="_blank"><i class="fa fa-github"></i></a>
                 </span>
+                
                 <h1>Contract Links</h1>
-                <h5>Main Contract</h5>
-                <h5>Diary Token</h5>
-                <h5>Ring Token</h5>
-                <h5>Cup Token</h5>
-                <h5>Locket Token</h5>
-                <h5>Diadem Token</h5>
-                <h5>Harry Token</h5>
-                <h5>Nagini Token</h5>
+                <h5 id="main_contract"></h5>
+                <h5 id="diary_contract"></h5>
+                <h5 id="ring_contract"></h5>
+                <h5 id="cup_contract"></h5>
+                <h5 id="locket_contract"></h5>
+                <h5 id="diadem_contract"></h5>
+                <h5 id="harry_contract"></h5>
+                <h5 id="nagini_contract"></h5>
             </div>
         </div>
     </div>

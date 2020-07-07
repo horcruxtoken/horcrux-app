@@ -20,15 +20,15 @@ else {
 }
 console.log (window.web3.currentProvider)
 
-const main_ContractAddress = '0x9AFea5c12a206D0e5708B9737E422A6e9BEAfAeA';
+const main_ContractAddress = '0xc629ee12d8Cbac8A43D15685E346A9fbDA06F5a1';
 
-const diary_ContractAddress = '0x15C99DEAA62E09b0837ec4Edb21aBD05C58a83a0';
-const ring_ContractAddress = '0xA652A275D0000E0bF6F0c8B5DA1badd3a4801598';
-const cup_ContractAddress = '0xcf36b9b16a273f5c3adeac71b8436108d2beb4ab';
-const locket_ContractAddress = '0xcf36b9b16a273f5c3adeac71b8436108d2beb4ab';
-const diadem_ContractAddress = '0xcf36b9b16a273f5c3adeac71b8436108d2beb4ab';
-const harry_ContractAddress = '0xcf36b9b16a273f5c3adeac71b8436108d2beb4ab';
-const nagini_ContractAddress = '0xcf36b9b16a273f5c3adeac71b8436108d2beb4ab';
+const diary_ContractAddress = '0x319E8967680CA652D46596A9203e9AA0789c6154';
+const ring_ContractAddress = '0x72C1b5c5870957001B16561AB06Ee8b020D567d1';
+const cup_ContractAddress = '0x8b1593a8f50E6608c7a9ffd81B30bCbA404BcD9c';
+const locket_ContractAddress = '0x42A1180db5F344739ef1c9386Cf30b7B508b7C12';
+const diadem_ContractAddress = '0x0017B144af9637663d233459590e81DfD0c62d7e';
+const harry_ContractAddress = '0xa463f68C2Bb600CBcc055869D2ba26646d7C2907';
+const nagini_ContractAddress = '0x4690C06dBAEDdde2F18773Ab7e0D0659162FF1D0';
 
 const main_ContractABI = JSON.parse('[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"sender","type":"address"},{"name":"recipient","type":"address"},{"name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"burnActivated","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"acceptOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"attack","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"recipient","type":"address"},{"name":"value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newContract","type":"address"},{"name":"contractName","type":"uint256"}],"name":"addContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"horcruxContracts","outputs":[{"name":"diary","type":"address"},{"name":"ring","type":"address"},{"name":"cup","type":"address"},{"name":"locket","type":"address"},{"name":"diadem","type":"address"},{"name":"harry","type":"address"},{"name":"nagini","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"newOwner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"owner","type":"address"},{"name":"spender","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"}],"name":"test__burn","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"}],"name":"sacrifice","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"contractsCantChange","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"activateBurning","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":true,"stateMutability":"payable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"}]' );
 // all horcrux should contracts have the same abi
@@ -50,6 +50,8 @@ let selectedAddress = ethereum.selectedAddress
 let account;
 const etherscan_tx = "<a target='_blank' href='https://kovan.etherscan.io/tx/"
 const etherscan_token = "<a target='_blank' href='https://kovan.etherscan.io/token/"
+const linkEnd = "'>"
+const a = "</a>"
 const success = "'>Success! Click to view Transaction</a>"
 const process = "Processing transaction..."
 const reverted = "Transaction reverted :(" 
@@ -88,6 +90,17 @@ document.getElementById('my_wallet').innerHTML = selectedAddress
 // document.getElementById('balance_of').innerHTML = web3.eth.getBalance(ethereum.selectedAddress)
 // console.log(web3.eth.getBalance(ethereum.selectedAddress))
 
+// ///////////////////////////////////////////////////////////////////////
+//                  CONTRACT LINKS
+// ///////////////////////////////////////////////////////////////////////
+document.getElementById('main_contract').innerHTML = etherscan_token + main_ContractAddress + linkEnd + "Main Contract" + a
+document.getElementById('diary_contract').innerHTML = etherscan_token + diary_ContractAddress + linkEnd + " Diary Contract" + a
+document.getElementById('ring_contract').innerHTML = etherscan_token + ring_ContractAddress + linkEnd + "Ring Contract" + a
+document.getElementById('cup_contract').innerHTML = etherscan_token + cup_ContractAddress + linkEnd + "Cup Contract" + a
+document.getElementById('locket_contract').innerHTML = etherscan_token + locket_ContractAddress + linkEnd + "Locket Contract" + a
+document.getElementById('diadem_contract').innerHTML = etherscan_token + diadem_ContractAddress + linkEnd + "Diadem Contract" + a
+document.getElementById('harry_contract').innerHTML = etherscan_token + harry_ContractAddress + linkEnd + "Harry Contract" + a
+document.getElementById('nagini_contract').innerHTML = etherscan_token + nagini_ContractAddress + linkEnd + "Nagini Contract" + a
 
 // ///////////////////////////////////////////////////////////////////////
 //                  UPDATE ACCOUNT WHEN SWITCH FROM METAMASK
@@ -183,24 +196,31 @@ function getCurrentBurnRate() {
     const abi = token_ContractABI;
     if (info > 7e10) {
       document.getElementById('burn_rate').innerHTML = "20"
+      document.getElementById('burn_rate_2').innerHTML = "20"
     }
     if (info <= 7e10 && info > 6e10) {
       document.getElementById('burn_rate').innerHTML = "12"
+      document.getElementById('burn_rate_2').innerHTML = "12"
     }
     if (info <= 6e10 && info > 5e10) {
       document.getElementById('burn_rate').innerHTML = "10"
+      document.getElementById('burn_rate_2').innerHTML = "10"
     }
     if (info <= 5e10 && info > 4e10) {
       document.getElementById('burn_rate').innerHTML = "8"
+      document.getElementById('burn_rate_2').innerHTML = "8"
     }
     if (info <= 4e10 && info > 3e10) {
       document.getElementById('burn_rate').innerHTML = "6"
+      document.getElementById('burn_rate_2').innerHTML = "6"
     }
     if (info <= 3e10 && info > 2e10) {
       document.getElementById('burn_rate').innerHTML = "4"
+      document.getElementById('burn_rate_2').innerHTML = "4"
     }
     if (info <= 2e10 && info > 1e10) {
       document.getElementById('burn_rate').innerHTML = "2"
+      document.getElementById('burn_rate_2').innerHTML = "2"
     }
   })
 }
@@ -211,8 +231,8 @@ function getCurrentBurnRate() {
 function numberWithCommas(x) {
   var parts = x.toString().split(".");
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  // return parts.join(".");
-  return parts[0]
+  return parts.join(".");
+  // return parts[0]
 }
 
 // ///////////////////////////////////////////////////////////////////////
