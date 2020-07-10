@@ -81,7 +81,7 @@
                     </div>
                     <div class="mt-3">
                         Contract Address: <br>
-                        <h6> <a target="blank" href="https://kovan.etherscan.io/token/0x9AFea5c12a206D0e5708B9737E422A6e9BEAfAeA"> 0x9AFea5c12a206D0e5708B9737E422A6e9BEAfAeA </a></h6>
+                        <h6 id="main_contract_address"> </h6>
                     </div>
                 </h3>
             </div>
@@ -125,7 +125,7 @@
                 <h1 class="mt-2 mb-3">Attack</h1>
                 <h4>Performing an attack burns 5 tokens and mints 5 tokens to your wallet depending on which horcrux is active</h4>
                 <button onclick="attack()" class="btn btn-primary custom_font" id="attack">Attack</button>
-                <p style="font-size: 1rem;" id="attack_transaction"> &nbsp;</p>
+                <p style="font-size: 1.25rem;" id="attack_transaction"> &nbsp;</p>
             </div>
 
         <hr class="w-75 hiddenHR">
@@ -135,10 +135,10 @@
                 <h1 class="mt-2 mb-3">Sacrifice</h1>
                 <h4>A sacrifice burns tokens from your balance and mints tokens to your wallet depending on which horcrux is active </h4>
                 <form class="form-inline mb-2" role="form">
-                    <input class="form-control text-center" type="number" id="tokens_to_burn" placeholder="1000" value="1000">
+                    <input class="form-control text-center" type="number" id="tokens_to_burn" placeholder="1000" value="1000" required>
                 </form>
-                <a href="#" onclick="sacrifice()" class="btn btn-primary" id="defend">Sacrifice</a>
-                <p  style="font-size: 1rem;" id="sacrifice_transaction">&nbsp; </p>
+                <button onclick="sacrifice()" class="btn btn-primary custom_font" id="sacrifice">Sacrifice</button>
+                <p  style="font-size: 1.25rem;" id="sacrifice_transaction">&nbsp; </p>
             </div>  
         </div>
 
@@ -165,15 +165,15 @@
                 <form>
                     <div class="form-group text-center">
                         <input type="text" class="form-control text-center" id="address_to" aria-describedby=""
-                            placeholder="RECEIVING ADDRESS">
+                            placeholder="RECEIVING ADDRESS" required>
                     </div>
                     <div class="form-group">
                         <input type="number" class="form-control text-center" id="transaction_value" 
-                            placeholder="AMOUNT TO SEND">
+                            placeholder="AMOUNT TO SEND" required>
                     </div>
                 </form>
-                <a href="#" onclick="transfer()" class="btn btn-primary" id="poo">send tokens</a>
-                <p style="font-size: 1rem;" id="send_transaction"> &nbsp;</p>
+                <button onclick="transfer()" class="btn btn-primary custom_font" id="transfer">Send Tokens</button>
+                <p style="font-size: 1.25rem;" id="send_transaction"> &nbsp;</p>
             </div>           
 
             <hr class="w-75 hiddenHR">
@@ -215,42 +215,61 @@
 
 
 <script>
+    let xSupply = 100000
+    function mainContractInfoApi() {
+        let mainTokenApi = '/api';
+        let mainContractfromApi = $.ajax({
+            url: mainTokenApi,
+            method: "GET"
+        }).then(function (response) {
+            const { name, symbol, totalSupply, contractAddress } = response
+            const formattedSupply = totalSupply / xSupply
+            const burnedTokens = 800000 - totalSupply / xSupply
 
-    let mainTokenApi = '/api';
-    let mainContractfromApi = $.ajax({
-        url: mainTokenApi,
-        method: "GET"
-    }).then(function (response) {
-        const { name, symbol, totalSupply } = response
-        const formattedSupply = totalSupply / supply
-        const burnedTokens = 800000 - totalSupply / supply
+            // console.log("main contract info from api", response)
+            $("#get_name").html(name)
+            $("#get_symbol").html(symbol)
+            $("#main_contract_address").html('<a target="_blank" href="https://kovan.etherscan.io/token/' + contractAddress + '">' + contractAddress + '</a>')
+            $("#total_supply").html(numberWithCommas(formattedSupply))
+            $("#burned_tokens").html(numberWithCommas(burnedTokens))
+        })
+    }
+    
 
-        console.log("main contract info from api", response)
-        $("#get_name").html(name)
-        $("#get_symbol").html(symbol)
-        $("#total_supply").html(numberWithCommas(formattedSupply))
-        $("#burned_tokens").html(numberWithCommas(burnedTokens))
-    })
+    function currentHorcruxInfoApi() {
+        let currentHorcrux = '/current_horcrux';
+        let apiName = $.ajax({
+            url: currentHorcrux,
+            method: "GET"
+        }).then(function (response) {
+            const { name, symbol, totalSupply, burnRate, contractAddress } = response
+            const formattedSupply = totalSupply / xSupply
 
+            // console.log("current horcrux info from api", response)
+            $("#horcrux_name").html(name)
+            $("#horcrux_symbol").html(symbol)
+            $("#horcrux_total_supply").html(numberWithCommas(formattedSupply))
+            $("#horcrux_burned_tokens").html(totalSupply / 1e8 + "%")
+            $("#burn_rate").html(burnRate + "%")
+            $("#horcrux_contract").html('<a target="_blank" href="https://kovan.etherscan.io/token/' + contractAddress + '">' + contractAddress + '</a>')
+        })
+    }
 
-    let currentHorcrux = '/current_horcrux';
-    let apiName = $.ajax({
-        url: currentHorcrux,
-        method: "GET"
-    }).then(function (response) {
-        const { name, symbol, totalSupply, burnRate, contractAddress } = response
-        const formattedSupply = totalSupply / supply
-        // const burnedTokens = 800000 - totalSupply / supply
-        
+    function refresh() {
+        setTimeout(function () {
+            console.log('update from api')
+            currentHorcruxInfoApi()
+            mainContractInfoApi()
+            refresh()
+        }, 15000);    
+    }
 
-        console.log("current horcrux info from api", response)
-        $("#horcrux_name").html(name)
-        $("#horcrux_symbol").html(symbol)
-        $("#horcrux_total_supply").html(numberWithCommas(formattedSupply))
-        $("#horcrux_burned_tokens").html(totalSupply / 1e8 + "%")
-        $("#burn_rate").html(burnRate + "%")
-        $("#horcrux_contract").html('<a target="_blank" href="https://kovan.etherscan.io/token/' + contractAddress + '">' + contractAddress + '</a>')
-    })
+    currentHorcruxInfoApi()
+    mainContractInfoApi()
+    refresh()
+
+    
+
 
     
 </script>

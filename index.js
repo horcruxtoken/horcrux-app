@@ -16,7 +16,7 @@ else if (window.web3) {
   // no need to ask for permission
 }
 else {
-  window.alert('In order to view this website properly, you must have an ethereum enabled browser! Try MetaMask!')
+  window.alert('In order to interact with the contract you must have an ethereum enabled browser!  Try MetaMask!')
 }
 console.log(window.web3.currentProvider)
 
@@ -62,9 +62,9 @@ function getAccount() {
 //                  GET USERS WALLET ADDRESS
 // ///////////////////////////////////////////////////////////////////////
 function updateWallet() {
-  document.getElementById('my_wallet').innerHTML = selectedAddress
+  document.getElementById('my_wallet').innerHTML = '<a target="_blank" href="https://kovan.etherscan.io/address/' + selectedAddress + '">' + selectedAddress + '</a>'
 }
-document.getElementById('my_wallet').innerHTML = selectedAddress
+document.getElementById('my_wallet').innerHTML = '<a target="_blank" href="https://kovan.etherscan.io/address/' + selectedAddress + '">' + selectedAddress + '</a>'
 
 // document.getElementById('balance_of').innerHTML = web3.eth.getBalance(ethereum.selectedAddress)
 // console.log(web3.eth.getBalance(ethereum.selectedAddress))
@@ -74,12 +74,15 @@ document.getElementById('my_wallet').innerHTML = selectedAddress
 //                  UPDATE ACCOUNT WHEN SWITCH FROM METAMASK
 // ///////////////////////////////////////////////////////////////////////
 window.ethereum.on('accountsChanged', function (user) {
+  let select = window.web3.currentProvider.selectedAddress
   account = user
-  document.getElementById('my_wallet').innerHTML = window.web3.currentProvider.selectedAddress
+  document.getElementById('my_wallet').innerHTML = '<a target="_blank" href="https://kovan.etherscan.io/address/' + select + '">' + select + '</a>'
   selectedAddress = ethereum.selectedAddress
   getAccount()
   balanceOf()
   getTokenBalance()
+  
+  
 })
 
 
@@ -110,13 +113,6 @@ function balanceOf() {
     }
   })
 }
-// function GetSupply() {
-//   mainContract.methods.totalSupply().call((error, supply) => {
-//     console.log(supply)
-//   })
-
-// }
-// GetSupply()
 
 // ///////////////////////////////////////////////////////////////////////
 //                  GET MAIN TOKEN BALANCE FROM USER
@@ -128,7 +124,6 @@ function getTokenBalance() {
     document.getElementById('tokens_balance').innerHTML = numberWithCommas(formatted);
   });
 }
-getTokenBalance()
 
 // ///////////////////////////////////////////////////////////////////////
 //                  ATTACK CONTRACT INTERACTION
@@ -155,11 +150,11 @@ function attack() {
       document.getElementById('attack_transaction').innerHTML = "Transaction Canceled"
       setTimeout(function () {
         document.getElementById('attack_transaction').innerHTML = "&nbsp;"
-      }, 3000);
+      }, 5000);
     })
     .finally(() => {
-      // burnedTokens()
-      // totalSupply()
+      getTokenBalance()
+      balanceOf()
     })
 }
 
@@ -189,11 +184,11 @@ function sacrifice() {
       document.getElementById('sacrifice_transaction').innerHTML = "Transaction Canceled"
       setTimeout(function () {
         document.getElementById('sacrifice_transaction').innerHTML = "&nbsp;"
-      }, 3000);
+      }, 5000);
     })
     .finally(() => {
-      totalSupply()
-      burnedTokens()
+      getTokenBalance()
+      balanceOf()
     })
 }
 
@@ -226,20 +221,15 @@ function transfer() {
       document.getElementById('send_transaction').innerHTML = "Transaction Canceled"
       setTimeout(function () {
         document.getElementById('send_transaction').innerHTML = "&nbsp;"
-      }, 3000);
+      }, 5000);
     })
     .finally(() => {
-      totalSupply()
-      burnedTokens()
-      tokenContractSelect()
-      getAccount()
+      getTokenBalance()
+      balanceOf()
     })
 }
 
-
-
-
-
+getTokenBalance()
 getAccount()
 
 

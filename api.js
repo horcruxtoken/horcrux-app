@@ -41,7 +41,8 @@ router.get('/api', (__, res) => {
                         name,
                         totalSupply,
                         symbol,
-                        decimals
+                        decimals,
+                        contractAddress: main_ContractAddress
                     })
                 })
             })
