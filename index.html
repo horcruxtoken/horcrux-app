@@ -182,19 +182,18 @@
             <div class="col-md-5 col-sm-12 text-center">
 
                 <span> 
-                    <i class="fab fa-discord"></i>
+                    <a href="https://discord.gg/QvRSfdq"><i class="fab fa-discord"></i></a>
                     <i class="fab fa-telegram-plane"></i>
-                    <i class="fab fa-reddit-alien"></i>
+                    <a href="https://github.com/horcruxtoken"><i class="fa fa-github"></i></a>
                 </span>
-                <h1>Contract Links</h1>
-                <h5>Main Contract</h5>
-                <h5>Diary Token</h5>
-                <h5>Ring Token</h5>
-                <h5>Cup Token</h5>
-                <h5>Locket Token</h5>
-                <h5>Diadem Token</h5>
-                <h5>Harry Token</h5>
-                <h5>Nagini Token</h5>
+                <h5 id="main_contract"></h5>
+                <h5 id="diary_contract"></h5>
+                <h5 id="ring_contract"></h5>
+                <h5 id="cup_contract"></h5>
+                <h5 id="locket_contract"></h5>
+                <h5 id="diadem_contract"></h5>
+                <h5 id="harry_contract"></h5>
+                <h5 id="nagini_contract"></h5>
             </div>
         </div>
     </div>
@@ -215,6 +214,9 @@
 
 
 <script>
+    const token = '<a target="_blank" href="https://kovan.etherscan.io/token/'
+    const aEnd = '">'
+    const aClose = '</a>'
     let xSupply = 100000
     function mainContractInfoApi() {
         let mainTokenApi = '/api';
@@ -229,9 +231,9 @@
             // console.log("main contract info from api", response)
             $("#get_name").html(name)
             $("#get_symbol").html(symbol)
-            $("#main_contract_address").html('<a target="_blank" href="https://kovan.etherscan.io/token/' + contractAddress + '">' + contractAddress + '</a>')
+            $("#main_contract_address").html(token + contractAddress + aEnd + contractAddress + aClose)
             $("#total_supply").html(numberWithCommas(formattedSupply))
-            $("#burned_tokens").html(numberWithCommas(burnedTokens))
+            $("#main_contract").html(token + contractAddress + aEnd + 'Main Contract' + aClose)
         })
     }
     
@@ -251,7 +253,27 @@
             $("#horcrux_total_supply").html(numberWithCommas(formattedSupply))
             $("#horcrux_burned_tokens").html(totalSupply / 1e8 + "%")
             $("#burn_rate").html(burnRate + "%")
-            $("#horcrux_contract").html('<a target="_blank" href="https://kovan.etherscan.io/token/' + contractAddress + '">' + contractAddress + '</a>')
+            $("#horcrux_contract").html(token + contractAddress + aEnd + contractAddress + aClose)
+            $("#horcrux_symbol").html(symbol)
+        })
+    }
+    
+    function getAllContractAddresses() {
+        
+        let allContracts = '/all_contracts';
+        let apiName = $.ajax({
+            url: allContracts,
+            method: "GET"
+        }).then(function (response) {
+            const { diary, ring, cup, locket, diadem, harry, nagini } = response.contracts
+            // console.log("all contracts", response)
+            $("#diary_contract").html(token + diary + aEnd + 'Diary Contract' + aClose)
+            $("#ring_contract").html(token + ring + aEnd + 'Ring Contract' + aClose)
+            $("#cup_contract").html(token + cup + aEnd + 'Cup Contract' + aClose)
+            $("#locket_contract").html(token + locket + aEnd + 'Locket Contract' + aClose)
+            $("#diadem_contract").html(token + diadem + aEnd + 'Diadem Contract' + aClose)
+            $("#harry_contract").html(token + harry + aEnd + 'Harry Contract' + aClose)
+            $("#nagini_contract").html(token + nagini + aEnd + 'Nagini Contract' + aClose)
         })
     }
 
@@ -266,6 +288,7 @@
 
     currentHorcruxInfoApi()
     mainContractInfoApi()
+    getAllContractAddresses()
     refresh()
 
     

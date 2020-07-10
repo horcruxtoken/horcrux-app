@@ -50,6 +50,15 @@ router.get('/api', (__, res) => {
     })
 })
 
+router.get('/all_contracts', (__, res) => {
+    mainContract.methods.horcruxContracts().call((__, contracts) => {
+        res.send({
+            contracts
+        })
+    })
+})
+
+
 router.get('/current_horcrux', (__, res) => {
     mainContract.methods.totalSupply().call((__, totalSupply) => {
         if (totalSupply > 7e10) {

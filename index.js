@@ -65,7 +65,7 @@ function getAccount() {
 function updateWallet() {
   document.getElementById('my_wallet').innerHTML = '<a target="_blank" href="https://kovan.etherscan.io/address/' + selectedAddress + '">' + selectedAddress + '</a>'
 }
-document.getElementById('my_wallet').innerHTML = '<a target="_blank" href="https://kovan.etherscan.io/address/' + account + '">' + account + '</a>'
+document.getElementById('my_wallet').innerHTML = '<a target="_blank" href="https://kovan.etherscan.io/address/' + selectedAddress + '">' + selectedAddress + '</a>'
 
 // document.getElementById('balance_of').innerHTML = web3.eth.getBalance(ethereum.selectedAddress)
 // console.log(web3.eth.getBalance(ethereum.selectedAddress))
@@ -104,7 +104,7 @@ function numberWithCommas(x) {
 
 function balanceOf() {
 
-  web3.eth.getBalance(account, function (error, result) {
+  web3.eth.getBalance(selectedAddress, function (error, result) {
     if (error) {
       console.log(error)
     }
@@ -119,9 +119,9 @@ function balanceOf() {
 //                  GET MAIN TOKEN BALANCE FROM USER
 // ///////////////////////////////////////////////////////////////////////
 function getTokenBalance() {
-  mainContract.methods.balanceOf(account).call((error, balance) => {
+  mainContract.methods.balanceOf(selectedAddress).call((error, balance) => {
     const formatted = balance / supply
-    console.log("balance of ", balance);
+    // console.log("balance of ", balance);
     document.getElementById('tokens_balance').innerHTML = numberWithCommas(formatted);
   });
 }
