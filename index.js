@@ -104,7 +104,7 @@ function numberWithCommas(x) {
 
 function balanceOf() {
 
-  web3.eth.getBalance(selectedAddress, function (error, result) {
+  web3.eth.getBalance(account, function (error, result) {
     if (error) {
       console.log(error)
     }
