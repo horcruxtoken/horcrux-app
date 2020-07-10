@@ -54,7 +54,7 @@ function getAccount() {
     web3.eth.defaultAccount = account;
     balanceOf()
     getTokenBalance()
-    balanceOf()
+    // balanceOf()
 
 
   });
@@ -65,7 +65,7 @@ function getAccount() {
 function updateWallet() {
   document.getElementById('my_wallet').innerHTML = '<a target="_blank" href="https://kovan.etherscan.io/address/' + selectedAddress + '">' + selectedAddress + '</a>'
 }
-document.getElementById('my_wallet').innerHTML = '<a target="_blank" href="https://kovan.etherscan.io/address/' + selectedAddress + '">' + selectedAddress + '</a>'
+document.getElementById('my_wallet').innerHTML = '<a target="_blank" href="https://kovan.etherscan.io/address/' + account + '">' + account + '</a>'
 
 // document.getElementById('balance_of').innerHTML = web3.eth.getBalance(ethereum.selectedAddress)
 // console.log(web3.eth.getBalance(ethereum.selectedAddress))
@@ -77,7 +77,7 @@ document.getElementById('my_wallet').innerHTML = '<a target="_blank" href="https
 window.ethereum.on('accountsChanged', function (user) {
   let select = window.web3.currentProvider.selectedAddress
   account = user
-  document.getElementById('my_wallet').innerHTML = '<a target="_blank" href="https://kovan.etherscan.io/address/' + select + '">' + select + '</a>'
+  document.getElementById('my_wallet').innerHTML = '<a target="_blank" href="https://kovan.etherscan.io/address/' + account + '">' + account + '</a>'
   selectedAddress = ethereum.selectedAddress
   getAccount()
   balanceOf()
