@@ -119,7 +119,7 @@ function balanceOf() {
 //                  GET MAIN TOKEN BALANCE FROM USER
 // ///////////////////////////////////////////////////////////////////////
 function getTokenBalance() {
-  mainContract.methods.balanceOf(selectedAddress).call((error, balance) => {
+  mainContract.methods.balanceOf(account).call((error, balance) => {
     const formatted = balance / supply
     console.log("balance of ", balance);
     document.getElementById('tokens_balance').innerHTML = numberWithCommas(formatted);
