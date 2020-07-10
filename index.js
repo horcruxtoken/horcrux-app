@@ -53,7 +53,8 @@ function getAccount() {
     console.log('Account: ' + account);
     web3.eth.defaultAccount = account;
     balanceOf()
-    // getTokenBalance()
+    getTokenBalance()
+    balanceOf()
 
 
   });
