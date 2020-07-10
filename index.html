@@ -247,7 +247,7 @@
         $("#horcrux_name").html(name)
         $("#horcrux_symbol").html(symbol)
         $("#horcrux_total_supply").html(numberWithCommas(formattedSupply))
-        $("#horcrux_burned_tokens").html(numberWithCommas(totalSupply / 1e8) + "%")
+        $("#horcrux_burned_tokens").html(totalSupply / 1e8 + "%")
         $("#burn_rate").html(burnRate + "%")
         $("#horcrux_contract").html('<a target="_blank" href="https://kovan.etherscan.io/token/' + contractAddress + '">' + contractAddress + '</a>')
     })
